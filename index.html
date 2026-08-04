@@ -425,8 +425,61 @@ section{scroll-margin-top:var(--nav-h)}
 }
 .chapter--flip .meta div{justify-content:flex-end}
 .meta svg{flex:none;width:15px;height:15px;stroke:var(--gold);fill:none;stroke-width:1.3}
+.meta .who{
+  font-family:var(--sans);font-size:.56rem;font-weight:400;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--gold);margin-left:.55rem;white-space:nowrap;
+}
 @media(min-width:900px){
   .meta{flex-direction:row;flex-wrap:wrap;gap:.8rem 2rem}
+  /* two-venue chapters wrap onto a second row; keep it on the copy's side */
+  .chapter--flip .meta{justify-content:flex-end}
+}
+
+/* ═══ Phones: the words sit on the photograph instead of in a block above it.
+   Above 900px the two-column split takes over again, untouched. ═══ */
+@media(max-width:899px){
+  .chapter{grid-template-columns:1fr;grid-template-areas:"stack"}
+  .ch-media,.ch-copy{grid-area:stack;min-width:0}
+
+  .ch-media{min-height:min(100vh,780px)}
+
+  /* Warm scrim, weighted low. Each portrait has the couple's faces near the
+     top, so the darkening is kept off them and concentrated where the text
+     actually lands - otherwise cream-on-watercolour is unreadable. */
+  .ch-media[style*="--img"]::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(to bottom,
+      rgba(44,32,14,.26) 0%,
+      rgba(44,32,14,.14) 20%,
+      rgba(44,32,14,.46) 40%,
+      rgba(44,32,14,.66) 58%,
+      rgba(44,32,14,.80) 78%,
+      rgba(44,32,14,.88) 100%);
+  }
+
+  .ch-copy{
+    z-index:2;justify-content:flex-end;
+    padding:clamp(2.4rem,8vw,3.6rem) clamp(1.5rem,6vw,2.4rem) clamp(2.6rem,9vw,3.6rem);
+    text-shadow:0 1px 12px rgba(28,19,5,.5);
+  }
+  .ch-copy .eyebrow{color:#EFD3A0;text-shadow:0 1px 10px rgba(28,19,5,.85)}
+  .ch-copy h3{color:#FFFBEE}
+  .ch-copy p{color:rgba(255,250,232,.92);max-width:38ch}
+  .meta div{color:rgba(255,250,232,.88)}
+  .meta svg{stroke:var(--gold-lite)}
+  .meta .who{color:#EFD3A0}
+  .ch-copy .orn i{background:linear-gradient(90deg,transparent,rgba(255,250,232,.5),transparent)}
+  .ch-copy .orn svg rect{stroke:rgba(255,250,232,.72)}
+  .ch-copy .orn svg circle{fill:rgba(255,250,232,.72)}
+
+  /* Chapter numeral moves to the top corner so it stops colliding with the
+     copy now that both share one cell. */
+  .ghost{
+    top:-.08em;bottom:auto;left:auto;right:.05em;
+    font-size:clamp(7rem,26vw,12rem);
+    color:rgba(122,90,46,.26);
+  }
 }
 
 /* ═══════════════════════════════════════════════
@@ -844,7 +897,7 @@ section{scroll-margin-top:var(--nav-h)}
     </div>
     <div class="meta">
       <div><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 11h18"/></svg>Friday, 17th January</div>
-      <div><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>7:00 PM onwards</div>
+      <div><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>5:30 PM onwards</div>
       <div><svg viewBox="0 0 24 24"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Atithi Inn, Lucknow</div>
     </div>
   </div>
@@ -869,7 +922,8 @@ section{scroll-margin-top:var(--nav-h)}
     <div class="meta">
       <div><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 11h18"/></svg>Saturday, 18th January</div>
       <div><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>10:30 AM onwards</div>
-      <div><svg viewBox="0 0 24 24"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Atithi Inn, Lucknow</div>
+      <div><svg viewBox="0 0 24 24"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Atithi Inn <span class="who">Groom&rsquo;s side</span></div>
+      <div><svg viewBox="0 0 24 24"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Aaradhya <span class="who">Bride&rsquo;s side</span></div>
     </div>
   </div>
   <div class="ch-media" style="--img:url('assets/haldi.jpg');--pos:26% center">
@@ -891,8 +945,9 @@ section{scroll-margin-top:var(--nav-h)}
     </div>
     <div class="meta">
       <div><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 11h18"/></svg>Saturday, 18th January</div>
-      <div><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>7:30 PM onwards</div>
-      <div><svg viewBox="0 0 24 24"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Atithi Inn, Lucknow</div>
+      <div><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>5:30 PM onwards</div>
+      <div><svg viewBox="0 0 24 24"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Atithi Inn <span class="who">Groom&rsquo;s side</span></div>
+      <div><svg viewBox="0 0 24 24"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Aaradhya <span class="who">Bride&rsquo;s side</span></div>
     </div>
   </div>
   <div class="ch-media" style="--img:url('assets/sangeet.jpg');--pos:22% center">
@@ -938,7 +993,7 @@ section{scroll-margin-top:var(--nav-h)}
     <div class="meta">
       <div><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 11h18"/></svg>Wednesday, 20th January</div>
       <div><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>8:00 AM — 12:00 PM</div>
-      <div><svg viewBox="0 0 24 24"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Atithi Inn, Lucknow</div>
+      <div><svg viewBox="0 0 24 24"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Viviana Greens Lawn</div>
     </div>
   </div>
   <div class="ch-media" style="--img:url('assets/vidai.jpg');--pos:30% center">
@@ -992,7 +1047,7 @@ section{scroll-margin-top:var(--nav-h)}
         <span class="v-side">Groom&rsquo;s Side</span>
       </div>
       <div class="v-body">
-        <span class="eyebrow">Engagement · Haldi · Mehendi · Sangeet · Vidai</span>
+        <span class="eyebrow">Engagement · Haldi · Mehendi · Sangeet</span>
         <h3>Atithi Inn</h3>
         <address>
           119 Acharya Narendradev Marg, Faizabad Road,<br>
@@ -1012,7 +1067,7 @@ section{scroll-margin-top:var(--nav-h)}
         <span class="v-side">Bride&rsquo;s Side</span>
       </div>
       <div class="v-body">
-        <span class="eyebrow">Engagement · Haldi · Mehendi · Sangeet</span>
+        <span class="eyebrow">Haldi · Mehendi · Sangeet</span>
         <h3>Aaradhya</h3>
         <address>
           Aaradhya G, opposite The Centrum,<br>
@@ -1032,7 +1087,7 @@ section{scroll-margin-top:var(--nav-h)}
         <span class="v-side">Both Families</span>
       </div>
       <div class="v-body">
-        <span class="eyebrow">The Wedding</span>
+        <span class="eyebrow">The Wedding · Vidai</span>
         <h3>Viviana Greens Lawn</h3>
         <address>
           Ansal API, near Lulu Mall, Golf City,<br>
@@ -1378,18 +1433,19 @@ section{scroll-margin-top:var(--nav-h)}
   var cur=A, nxt=B,
       master=0,        // overall level, 0 when muted
       gCur=1, gNxt=0,  // crossfade gains
-      wants=false, sliding=false, unlocked=false, dead=false;
+      wants=true,      // sound is on by default; the icon shows this from load
+      decided=false,   // flips once the visitor uses the button themselves
+      sliding=false, unlocked=false, dead=false;
 
   function cl(v){ return v<0?0:v>1?1:v; }
   function apply(){ cur.volume=cl(master*gCur); nxt.volume=cl(master*gNxt); }
   apply();  // start silent - otherwise the first frame can escape at full volume
 
   function paint(){
-    var on=wants&&!cur.paused;
-    btn.classList.toggle('muted',!on);
-    btn.classList.toggle('playing',on);
-    btn.setAttribute('aria-pressed',on?'true':'false');
-    btn.setAttribute('aria-label',on?'Mute music':'Play music');
+    btn.classList.toggle('muted',!wants);
+    btn.classList.toggle('playing',wants&&!cur.paused);  // ring pulses only when audible
+    btn.setAttribute('aria-pressed',wants?'true':'false');
+    btn.setAttribute('aria-label',wants?'Mute music':'Play music');
   }
 
   /* Visible from the outset. Gating this on `canplay` meant that on phones -
@@ -1467,7 +1523,7 @@ section{scroll-margin-top:var(--nav-h)}
      wheel do not count as activation gestures - only the tap does. */
   var acts=['pointerdown','touchstart','keydown','wheel','scroll'];
   function kick(ev){
-    if(dead) return;
+    if(dead||decided||!wants) return;   // respect an explicit mute
     // The button runs its own handler. Without this guard, pointerdown would
     // start the track and the click that follows would read it as "mute".
     if(ev&&ev.target&&btn.contains(ev.target)) return;
@@ -1482,7 +1538,8 @@ section{scroll-margin-top:var(--nav-h)}
 
   btn.addEventListener('click',function(ev){
     ev.stopPropagation();
-    wants&&!cur.paused ? stop() : start();
+    decided=true;
+    wants ? stop() : start();
   });
 
   document.addEventListener('visibilitychange',function(){
