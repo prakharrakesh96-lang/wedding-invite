@@ -514,6 +514,57 @@ section{scroll-margin-top:var(--nav-h)}
   text-decoration:none;color:var(--ink);
 }
 .v-map a:hover{background:#fff}
+.v-side{
+  position:absolute;top:14px;right:14px;
+  background:rgba(176,140,74,.95);color:#FFFCF2;
+  border:1px solid rgba(255,252,242,.35);
+  padding:.5rem .8rem;
+  font-family:var(--sans);font-size:.58rem;
+  letter-spacing:.2em;text-transform:uppercase;
+}
+.v-map-pending{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:.9rem;text-align:center;padding:1.5rem;
+  background:repeating-linear-gradient(45deg,#E5DCC4,#E5DCC4 12px,#E1D7BC 12px,#E1D7BC 24px);
+}
+.v-map-pending span{
+  font-family:var(--sans);font-size:.6rem;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--ink-soft);
+}
+.v-card.v-wide{grid-column:1/-1}
+@media(min-width:840px){
+  .v-card.v-wide{display:grid;grid-template-columns:1.08fr 1fr;align-items:stretch}
+  .v-card.v-wide .v-map{aspect-ratio:auto;height:100%;min-height:350px}
+  .v-card.v-wide .v-body{display:flex;flex-direction:column;justify-content:center}
+}
+
+/* ── music toggle ── */
+.bgm-btn{
+  position:fixed;right:clamp(1rem,3vw,2rem);bottom:clamp(1rem,3vw,2rem);
+  z-index:70;
+  width:52px;height:52px;border-radius:50%;
+  display:grid;place-items:center;
+  background:rgba(255,252,242,.92);
+  border:1px solid var(--gold-pale);
+  color:var(--gold);cursor:pointer;
+  backdrop-filter:blur(6px);
+  transition:opacity .5s,transform .3s,background .3s;
+  opacity:0;pointer-events:none;
+}
+.bgm-btn.ready{opacity:1;pointer-events:auto}
+.bgm-btn:hover{background:#fff;transform:scale(1.06)}
+.bgm-btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.5;
+  stroke-linecap:round;stroke-linejoin:round}
+.bgm-btn .ic-off{display:none}
+.bgm-btn.muted .ic-on{display:none}
+.bgm-btn.muted .ic-off{display:block}
+.bgm-btn::after{
+  content:"";position:absolute;inset:-5px;border-radius:50%;
+  border:1px solid var(--gold-pale);opacity:0;
+}
+.bgm-btn.playing::after{animation:bgmPulse 2.6s ease-out infinite}
+@keyframes bgmPulse{0%{opacity:.7;transform:scale(.9)}100%{opacity:0;transform:scale(1.25)}}
+@media(prefers-reduced-motion:reduce){.bgm-btn.playing::after{animation:none}}
 .v-body{padding:clamp(1.6rem,3.4vw,2.4rem)}
 .v-body .eyebrow{display:block;margin-bottom:1.2rem;letter-spacing:.24em;font-size:.6rem}
 .v-body h3{
@@ -691,7 +742,7 @@ section{scroll-margin-top:var(--nav-h)}
   </div>
 
   <p class="hero-when rv rv-d2">17 &nbsp;—&nbsp; 20 January 2027</p>
-  <p class="hero-where rv rv-d3">Atithi Inn, Lucknow &nbsp;·&nbsp; Viviana Greens Lawn</p>
+  <p class="hero-where rv rv-d3">Atithi Inn &nbsp;·&nbsp; Aaradhya &nbsp;·&nbsp; Viviana Greens Lawn, Lucknow</p>
 
   <div class="scroll-cue rv rv-d3"><span>Scroll</span><i></i></div>
 </section>
@@ -940,33 +991,64 @@ section{scroll-margin-top:var(--nav-h)}
   </div>
 
   <div class="v-grid">
+
+    <!-- ── Groom's side ── -->
     <div class="v-card rv">
       <div class="v-map">
         <iframe title="Map to Atithi Inn, Lucknow" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-          src="https://www.google.com/maps?q=Atithi+Inn+Nishatganj+Lucknow&z=15&output=embed"></iframe>
-        <a href="https://www.google.com/maps/search/?api=1&query=Atithi+Inn+Nishatganj+Lucknow" target="_blank" rel="noopener">Open in Maps ↗</a>
+          src="https://www.google.com/maps?q=ATITHI+Inn+Nishatganj+Lucknow&ll=26.8706002,80.9506512&z=16&output=embed"></iframe>
+        <a href="https://www.google.com/maps/search/?api=1&query=ATITHI%20Inn%20Lucknow&query_place_id=ChIJQ53IiHD9mzkRA69o6giN2Sk" target="_blank" rel="noopener">Open in Maps ↗</a>
+        <span class="v-side">Groom&rsquo;s Side</span>
       </div>
       <div class="v-body">
         <span class="eyebrow">Engagement · Haldi · Mehendi · Sangeet · Vidai</span>
-        <h3>Atithi Inn, Lucknow</h3>
-        <address>Add the full address of Atithi Inn here</address>
-        <a class="go" href="https://www.google.com/maps/dir/?api=1&destination=Atithi+Inn+Nishatganj+Lucknow" target="_blank" rel="noopener">Get directions ↗</a>
+        <h3>Atithi Inn</h3>
+        <address>
+          119 Acharya Narendradev Marg, Faizabad Road,<br>
+          New Hyderabad, Nishatganj,<br>
+          Lucknow, Uttar Pradesh 226007
+        </address>
+        <a class="go" href="https://www.google.com/maps/dir/?api=1&destination=ATITHI%20Inn%20Lucknow&destination_place_id=ChIJQ53IiHD9mzkRA69o6giN2Sk" target="_blank" rel="noopener">Get directions ↗</a>
       </div>
     </div>
 
+    <!-- ── Bride's side ──
+         TO FINISH: replace the .v-map-pending block below with the same
+         iframe + "Open in Maps" markup used in the Atithi card above,
+         and fill in the address. -->
     <div class="v-card rv rv-d1">
+      <div class="v-map v-map-pending">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#B08C4A" stroke-width="1.1"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        <span>Map to follow</span>
+        <span class="v-side">Bride&rsquo;s Side</span>
+      </div>
+      <div class="v-body">
+        <span class="eyebrow">Engagement · Haldi · Mehendi · Sangeet</span>
+        <h3>Aaradhya</h3>
+        <address>Address to be confirmed</address>
+      </div>
+    </div>
+
+    <!-- ── Common: the wedding ── -->
+    <div class="v-card v-wide rv rv-d2">
       <div class="v-map">
-        <iframe title="Map to Viviana Greens Lawn" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-          src="https://www.google.com/maps?q=Viviana+Greens+Lawn+Lucknow&z=15&output=embed"></iframe>
-        <a href="https://www.google.com/maps/search/?api=1&query=Viviana+Greens+Lawn+Lucknow" target="_blank" rel="noopener">Open in Maps ↗</a>
+        <iframe title="Map to Viviana Greens Lawn, Lucknow" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps?q=Viviana+Greens+Lawn+Lucknow&ll=26.7739687,80.9923243&z=16&output=embed"></iframe>
+        <a href="https://www.google.com/maps/search/?api=1&query=Viviana%20Greens%20Lawn&query_place_id=ChIJ22QWt3XlmzkRWRmE6WENXA4" target="_blank" rel="noopener">Open in Maps ↗</a>
+        <span class="v-side">Both Families</span>
       </div>
       <div class="v-body">
         <span class="eyebrow">The Wedding</span>
         <h3>Viviana Greens Lawn</h3>
-        <address>Add the full address of Viviana Greens Lawn here</address>
-        <a class="go" href="https://www.google.com/maps/dir/?api=1&destination=Viviana+Greens+Lawn+Lucknow" target="_blank" rel="noopener">Get directions ↗</a>
+        <address>
+          Ansal API, near Lulu Mall, Golf City,<br>
+          Sector A2, Sushant Golf City,<br>
+          Lucknow, Uttar Pradesh 226002
+        </address>
+        <a class="go" href="https://www.google.com/maps/dir/?api=1&destination=Viviana%20Greens%20Lawn&destination_place_id=ChIJ22QWt3XlmzkRWRmE6WENXA4" target="_blank" rel="noopener">Get directions ↗</a>
       </div>
     </div>
+
   </div>
 </section>
 
@@ -1274,6 +1356,129 @@ section{scroll-margin-top:var(--nav-h)}
       btn.disabled=false;btn.style.opacity='';btn.textContent='Try again';
     });
   });
+})();
+</script>
+
+<!-- ═════════ BACKGROUND MUSIC ═════════ -->
+<audio id="bgm" preload="auto" playsinline>
+  <source src="assets/music.mp3" type="audio/mpeg">
+</audio>
+<button class="bgm-btn" id="bgmBtn" type="button" aria-label="Play music" aria-pressed="false">
+  <svg class="ic-on" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19.5 5.5a9 9 0 0 1 0 13"/></svg>
+  <svg class="ic-off" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="m17 9 4 6"/><path d="m21 9-4 6"/></svg>
+</button>
+<script>
+/* The track is ~29s and ends mid-phrase, so a native loop would click audibly
+   every half minute. Two elements leapfrog each other with a crossfade instead. */
+(function(){
+  var VOL=.35,      // ceiling volume - the page should stay listenable
+      XF=2.2,       // crossfade length, seconds
+      FADE_IN=1800;
+
+  var btn=document.getElementById('bgmBtn'), A=document.getElementById('bgm');
+  if(!btn||!A) return;
+
+  var B=A.cloneNode(true); B.removeAttribute('id'); A.parentNode.insertBefore(B,A.nextSibling);
+  A.loop=B.loop=false;
+
+  var cur=A, nxt=B,
+      master=0,        // overall level, 0 when muted
+      gCur=1, gNxt=0,  // crossfade gains
+      wants=false, sliding=false, dead=false;
+
+  function cl(v){ return v<0?0:v>1?1:v; }
+  function apply(){ cur.volume=cl(master*gCur); nxt.volume=cl(master*gNxt); }
+
+  function paint(){
+    var on=wants&&!cur.paused;
+    btn.classList.toggle('muted',!on);
+    btn.classList.toggle('playing',on);
+    btn.setAttribute('aria-pressed',on?'true':'false');
+    btn.setAttribute('aria-label',on?'Mute music':'Play music');
+  }
+
+  function ramp(to,ms,done){
+    var from=master,t0=performance.now();
+    (function step(now){
+      var k=cl((now-t0)/ms);
+      master=cl(from+(to-from)*k); apply();
+      if(k<1) requestAnimationFrame(step); else if(done) done();
+    })(t0);
+  }
+
+  function slide(){
+    if(sliding) return;
+    sliding=true;
+    try{ nxt.currentTime=0; }catch(e){}
+    var q=nxt.play(); if(q&&q.catch) q.catch(function(){});
+    var t0=performance.now();
+    (function step(now){
+      var k=cl((now-t0)/(XF*1000));
+      gCur=1-k; gNxt=k; apply();
+      if(k<1) requestAnimationFrame(step);
+      else{
+        cur.pause(); try{ cur.currentTime=0; }catch(e){}
+        var t=cur; cur=nxt; nxt=t;
+        gCur=1; gNxt=0; apply(); sliding=false;
+      }
+    })(t0);
+  }
+
+  function watch(){
+    if(!wants||sliding||cur.paused) return;
+    var d=cur.duration;
+    if(d&&isFinite(d)&&d-cur.currentTime<=XF) slide();
+  }
+  A.addEventListener('timeupdate',watch);
+  B.addEventListener('timeupdate',watch);
+
+  function start(){
+    if(dead) return;
+    wants=true;
+    var q=cur.play();
+    if(q&&q.catch) q.catch(function(){ wants=false; paint(); });
+    if(q&&q.then) q.then(function(){ ramp(VOL,FADE_IN); paint(); });
+    else if(!cur.paused){ ramp(VOL,FADE_IN); paint(); }
+  }
+
+  function stop(){
+    wants=false;
+    ramp(0,400,function(){
+      if(!wants){ A.pause(); B.pause(); }
+    });
+    paint();
+  }
+
+  /* Autoplay with sound is refused by every current browser, so the first
+     genuine interaction is what actually starts this. */
+  var acts=['pointerdown','keydown','touchstart','wheel','scroll'];
+  function kick(){
+    if(dead) return;
+    start();
+    if(!cur.paused) acts.forEach(function(e){
+      window.removeEventListener(e,kick,{capture:true});
+    });
+  }
+  acts.forEach(function(e){
+    window.addEventListener(e,kick,{capture:true,passive:true});
+  });
+
+  btn.addEventListener('click',function(ev){
+    ev.stopPropagation();
+    wants&&!cur.paused ? stop() : start();
+  });
+
+  document.addEventListener('visibilitychange',function(){
+    if(document.hidden){ A.pause(); B.pause(); paint(); }
+    else if(wants){ var q=cur.play(); if(q&&q.catch) q.catch(function(){}); paint(); }
+  });
+
+  /* If the file is missing or unplayable, leave no trace of the feature. */
+  function bail(){ dead=true; btn.remove(); }
+  A.addEventListener('error',bail);
+  A.addEventListener('canplay',function(){ btn.classList.add('ready'); });
+  setTimeout(function(){ if(!dead&&A.readyState>=2) btn.classList.add('ready'); },1500);
+  paint();
 })();
 </script>
 </body>
