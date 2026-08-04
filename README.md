@@ -41,18 +41,20 @@ the crop is tuned per image. Adjust the percentage if one looks off.
 | Venue | Badge | Layout |
 |---|---|---|
 | Atithi Inn | Groom's Side | top-left, address filled in |
-| Aaradhya | Bride's Side | top-right, **still needs map + address** |
+| Aaradhya | Bride's Side | top-right, address filled in |
 | Viviana Greens Lawn | Both Families | full-width row below, address filled in |
 
-Atithi Inn and Viviana Greens addresses were verified against Google Places.
-The wedding venue spans the full row on purpose — two family venues above,
-the shared one below.
+All three addresses were verified against Google Places and each map is
+centred on exact coordinates rather than a name search, so the pins can't
+drift onto a similarly-named place. The wedding venue spans the full row on
+purpose — two family venues above, the shared one below.
 
-**Finishing the Aaradhya card** — it currently shows a striped "Map to follow"
-panel. Search `v-map-pending`. Replace that whole `<div>` with a copy of the
-Atithi card's `<div class="v-map">` block, swapping in Aaradhya's map query,
-then replace `Address to be confirmed` with the real address and add a
-`Get directions` link like the other two cards have.
+Aaradhya's pin shows no name label because the record is a premise rather
+than a registered business; the location itself is correct.
+
+**Event locations** — all four chapter blocks still name Atithi Inn. If any
+function happens on the bride's side instead, search for `Atithi Inn, Lucknow`
+in the chapters and swap the ones that should read Aaradhya.
 
 **Music** — `assets/music.mp3`, 28.6s, 128 kbps. A round toggle sits
 bottom-right. Behaviour:
